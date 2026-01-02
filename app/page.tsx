@@ -8,7 +8,7 @@ interface LinkedInProfile {
   handle: string
 }
 
-const profiles: LinkedInProfile[] = [
+const coaches: LinkedInProfile[] = [
   {
     name: 'Zanir Habib',
     handle: 'zanirhabib',
@@ -29,17 +29,45 @@ const profiles: LinkedInProfile[] = [
     handle: 'samirrayani',
     url: 'https://www.linkedin.com/in/samirrayani?miniProfileUrn=urn%3Ali%3Afs_miniProfile%3AACoAAAC5TVYBi810HhD-ZAe0jKlukytvYNiYJzQ&lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BwLNfUy0NQ4%2BAimcZ4nT8og%3D%3D',
   },
+  {
+    name: 'Danish Moti',
+    handle: 'danishmoti',
+    url: 'https://www.linkedin.com/in/danishmoti',
+  },
 ]
+
+const participants: LinkedInProfile[] = [
+  {
+    name: 'Hassan Chagani',
+    handle: 'hassanchagani',
+    url: 'https://www.linkedin.com/in/hassanchagani/',
+  },
+]
+
+const blogPost = {
+  title: 'Excited for the 100x Dev Session at Summit!',
+  date: 'January 2, 2026',
+  content: `Today marks an incredible milestone as we kick off the 100x Dev Session at the Summit!
+
+We're bringing together some of the brightest minds in development to explore how we can leverage AI and cutting-edge tools to become 100x more productive.
+
+This workshop is all about pushing boundaries, learning from each other, and discovering new ways to build amazing products faster than ever before.
+
+Let's make today a day of learning, collaboration, and innovation. Here's to becoming 100x developers together!`,
+}
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [activeTab, setActiveTab] = useState<'coaches' | 'participants' | 'blog'>('coaches')
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
+  const profiles = activeTab === 'coaches' ? coaches : activeTab === 'participants' ? participants : []
+
   return (
-    <main className="min-h-screen flex flex-col justify-center items-center px-4 py-12">
+    <main className="min-h-screen flex flex-col items-center px-4 py-12 pt-20">
       {/* Background decoration */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
@@ -49,16 +77,71 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10 w-full max-w-2xl">
         {/* Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className={`text-center mb-12 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h1 className="text-5xl md:text-6xl font-bold mb-4 font-display">
             <span className="gradient-text">Summit 100x</span>
           </h1>
           <p className="text-lg text-gray-400 font-light tracking-wide">Connect with our team</p>
         </div>
 
-        {/* LinkedIn Cards */}
-        <div className="space-y-4 md:space-y-6">
-          {profiles.map((profile, index) => (
+        {/* Tab Navigation */}
+        <div className={`flex justify-center mb-10 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+          style={{ transitionDelay: mounted ? '50ms' : '0ms' }}
+        >
+          <div className="flex bg-slate-800/50 backdrop-blur-md border border-slate-700/50 rounded-full p-1">
+            <button
+              onClick={() => setActiveTab('coaches')}
+              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeTab === 'coaches'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Coaches
+            </button>
+            <button
+              onClick={() => setActiveTab('participants')}
+              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeTab === 'participants'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Participants
+            </button>
+            <button
+              onClick={() => setActiveTab('blog')}
+              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeTab === 'blog'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Blogs
+            </button>
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="space-y-4 md:space-y-6 min-h-[400px]">
+          {/* Blog Content */}
+          {activeTab === 'blog' && (
+            <article className={`transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-xl p-6 md:p-8">
+                <p className="text-sm text-blue-400 font-mono mb-3">{blogPost.date}</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 font-display">{blogPost.title}</h2>
+                <div className="text-gray-300 leading-relaxed whitespace-pre-line">{blogPost.content}</div>
+              </div>
+            </article>
+          )}
+
+          {/* LinkedIn Cards */}
+          {activeTab !== 'blog' && profiles.length === 0 && (
+            <div className={`text-center py-12 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <p className="text-gray-400">No participants yet</p>
+            </div>
+          )}
+          {activeTab !== 'blog' && profiles.map((profile, index) => (
             <div
               key={profile.handle}
               className={`transition-all duration-1000 ${
