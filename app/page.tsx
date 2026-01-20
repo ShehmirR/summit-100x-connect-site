@@ -43,6 +43,13 @@ const participants: LinkedInProfile[] = [
     url: 'https://www.linkedin.com/in/hassanchagani/',
   },
   {
+
+    name: 'Salman Mithani',
+    handle: 'salman-mithani',
+    url: 'https://www.linkedin.com/in/salman-mithani/',
+
+  },
+      {
     name: 'Shehmir Rangwala',
     handle: 'shehmirr',
     url: 'https://shehmirr.github.io/portfolio/',
