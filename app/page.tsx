@@ -42,6 +42,11 @@ const participants: LinkedInProfile[] = [
     handle: 'hassanchagani',
     url: 'https://www.linkedin.com/in/hassanchagani/',
   },
+  {
+    name: 'Salman Mithani',
+    handle: 'salman-mithani',
+    url: 'https://www.linkedin.com/in/salman-mithani/',
+  },
 ]
 
 const blogPost = {
